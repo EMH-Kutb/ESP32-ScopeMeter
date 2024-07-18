@@ -20,10 +20,17 @@ The Oscilloscope is a must-have test instrument for any electronics engineer. It
 <br>
 [Note: As this projects are very simple we are only providing the code, schemaitic, and a few essential images if you want to get the images or code explanations do check out the Circuit Digest website.
 <br>
-# HOW TO USE
-1- The `./ESP32_Oscilloscope` folder needs to go in your Arduio IDE sketches folder.
-2- You need to extract `.\ESP32_Oscilloscope\TFT_eSPI.zip` to the libraries folder for Arduino IDE
-3- Change configurations if needed
-If you want to change the pins for the SPI device (screen) or it's resolution, you need to edit `User_config.h` in the `TFT_eSPI` library folder
-If you want to change the pins for the buttons, it is in ESP32_Oscilloscope.ino
 <br>
+
+<h1> HOW TO USE </h1>
+<br>
+<br>
+1- The  ./ESP32_Oscilloscope folder needs to go in your Arduio IDE sketches folder.
+<br>
+2- You need to extract .\ESP32_Oscilloscope\TFT_eSPI.zip to the libraries folder for Arduino IDE
+<br>
+3- Change configurations if needed
+<br>
+If you want to change the pins for the SPI device (screen) or it's resolution, you need to edit User_config.h in the TFT_eSPI library folder
+<br>
+If you want to change the pins for the buttons, it is in ESP32_Oscilloscope.ino
