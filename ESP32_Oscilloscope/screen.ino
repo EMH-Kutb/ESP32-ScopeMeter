@@ -19,7 +19,7 @@ float to_scale(float reading) {
                (
                  (
                    (
-                     (float)((reading - 20480.0) / 4095.0)
+                     (float)((reading/* - 20480.0*/) / 4095.0)
                      + (offset / 3.3)
                    )
                    * 3300 /
@@ -143,7 +143,6 @@ void draw_sprite(float freq,
       if (v_div <= 0)
         v_div = 550;
     }
-
     //only draw digital data if a trigger was in the data
     if (!(digital_wave_option == 2 && trigger == 0))
       draw_channel1(trigger, 0, i2s_buff, sample_rate);
@@ -236,6 +235,7 @@ void draw_channel1(uint32_t trigger0, uint32_t trigger1, uint16_t *i2s_buff, flo
   filter._value = i2s_buff[trigger0];
   float data_per_pixel = (s_div / 40.0) / (sample_rate / 1000);
 
+
   //  uint32_t cursor = (trigger1-trigger0)/data_per_pixel;
   //  spr.drawLine(cursor, 0, cursor, 135, TFT_RED);
 
@@ -268,6 +268,7 @@ void draw_channel1(uint32_t trigger0, uint32_t trigger1, uint16_t *i2s_buff, flo
           n_data = to_scale(i2s_buff[index]);
 
         spr.drawLine(i - 1, o_data, i, n_data, TFT_BLUE);
+
         o_data = n_data;
       }
 

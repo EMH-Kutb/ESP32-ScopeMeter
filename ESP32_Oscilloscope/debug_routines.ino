@@ -1,6 +1,6 @@
-#ifdef DEBUG_BUF
+#ifdef DEBUG_BUFF
 void debug_buffer() {
-  ADC_Sampling();
+  ADC_Sampling(i2s_buff);
   i2s_adc_disable(I2S_NUM_0);
   delay(1000);
   for (uint32_t i = 0; i < B_MULT * NUM_SAMPLES; i++) {

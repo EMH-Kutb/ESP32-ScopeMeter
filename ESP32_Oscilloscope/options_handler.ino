@@ -171,8 +171,10 @@ void button() {
 
           case Stop:
             stop = !stop;
-            //Serial.print("Stop : ");
-            //Serial.println(stop);
+#ifdef DEBUG_SERIAL
+            Serial.print("Stop : ");
+            Serial.println(stop);
+#endif
             set_value = false;
             break;
 

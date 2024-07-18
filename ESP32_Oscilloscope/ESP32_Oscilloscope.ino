@@ -21,7 +21,7 @@
 #define BUFF_SIZE 50000
 #define B_MULT BUFF_SIZE/NUM_SAMPLES
 #define BUTTON_Ok        32
-#define BUTTON_Plus        15
+#define BUTTON_Plus        25
 #define BUTTON_Minus        35
 #define BUTTON_Back        34
 
@@ -159,12 +159,13 @@ void core0_task( void * pvParameters ) {
     if (new_data || menu_action) {
       new_data = false;
       menu_action = false;
-
       updating_screen = true;
       update_screen(i2s_buff, RATE);
       updating_screen = false;
       vTaskDelay(pdMS_TO_TICKS(10));
+#ifdef DEBUG_SERIAL
       Serial.println("CORE0");
+#endif
     }
 
     vTaskDelay(pdMS_TO_TICKS(10));
@@ -181,22 +182,9 @@ void core1_task( void * pvParameters ) {
       while (updating_screen) {
         vTaskDelay(pdMS_TO_TICKS(1));
       }
-      if (!stop) {
-        if (stop_change) {
-          i2s_adc_enable(I2S_NUM_0);
-          stop_change = false;
-        }
-        ADC_Sampling(i2s_buff);
-        new_data = true;
-      }
-      else {
-        if (!stop_change) {
-          i2s_adc_disable(I2S_NUM_0);
-          i2s_zero_dma_buffer(I2S_NUM_0);
-          stop_change = true;
-        }
-      }
+#ifdef DEBUG_SERIAL
       Serial.println("CORE1");
+#endif
       vTaskDelay(pdMS_TO_TICKS(300));
     }
     else {
@@ -235,7 +223,9 @@ void core1_task( void * pvParameters ) {
 
           single_trigger = false;
           new_data = true;
+#ifdef DEBUG_SERIAL
           Serial.println("Single GOT");
+#endif
           //return to normal execution in stop mode
         }
 
@@ -247,4 +237,20 @@ void core1_task( void * pvParameters ) {
   }
 }
 
-void loop() {}
+void loop() {
+  if (!stop) {
+    if (stop_change) {
+      i2s_adc_enable(I2S_NUM_0);
+      stop_change = false;
+    }
+    ADC_Sampling(i2s_buff);
+    new_data = true;
+  }
+  else {
+    if (!stop_change) {
+      i2s_adc_disable(I2S_NUM_0);
+      i2s_zero_dma_buffer(I2S_NUM_0);
+      stop_change = true;
+    }
+  }
+}
